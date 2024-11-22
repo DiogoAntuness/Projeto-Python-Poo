@@ -32,6 +32,12 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'adote.Usuario'
 
+# Opa
+LOGIN_URL = '/login/'  # Página de login
+LOGIN_REDIRECT_URL = '/'  # Página padrão após login
+LOGOUT_REDIRECT_URL = '/'  # Página após logout
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',

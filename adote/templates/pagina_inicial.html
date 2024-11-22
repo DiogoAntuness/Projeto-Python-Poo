@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Bem-vindo ao AdotePet!</h1>
+        <p>Aqui você pode encontrar animais para adoção e também doar.</p>
+        <a href="{% url 'lista_animais' %}" class="btn btn-primary">Ver Animais</a>
+    </div>
+{% endblock %}
+

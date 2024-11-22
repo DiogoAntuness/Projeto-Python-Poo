@@ -1,61 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Animais</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f4f4f9;
-            padding-top: 50px;
-        }
+{% extends 'base.html' %}
 
-        .card {
-            margin-bottom: 20px;
-        }
+{% block title %}Lista de Animais{% endblock %}
 
-        .card-header {
-            background-color: #ffcb00;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .card-body {
-            background-color: white;
-        }
-
-        .filter-form {
-            margin-bottom: 30px;
-        }
-
-        .filter-form select, .filter-form button {
-            border-radius: 5px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .alert {
-            margin-top: 20px;
-        }
-
-        .btn-custom {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+{% block content %}
+    <div class="container mt-5">
         <!-- Filtro de cidade -->
-        <form method="get" action="" class="filter-form d-flex justify-content-between">
-            <div class="form-group w-50">
+        <form method="get" action="" class="filter-form d-flex justify-content-between align-items-end mb-5">
+            <div class="form-group w-75">
                 <label for="cidade" class="form-label">Filtrar por cidade:</label>
                 <select name="cidade" id="cidade" class="form-select">
                     <option value="">Selecione uma cidade</option>
@@ -64,11 +15,11 @@
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="btn btn-custom align-self-end">Filtrar</button>
+            <button type="submit" class="btn btn-custom ml-3">Filtrar</button>
         </form>
 
         <!-- Título da página -->
-        <h1 class="text-center mb-4">Animais para Adoção</h1>
+        <h1 class="text-center mb-5">Animais para Adoção</h1>
 
         <!-- Lista de animais -->
         <div class="row">
@@ -96,6 +47,4 @@
             {% endfor %}
         </div>
     </div>
-
-    <!-- JavaScript do Bootstrap -->
-    
+{% endblock %}

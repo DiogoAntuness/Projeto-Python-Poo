@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
+
 
 class Usuario(AbstractUser):
     DOADOR = 'doador'
@@ -11,6 +13,12 @@ class Usuario(AbstractUser):
 
     tipo_usuario = models.CharField(max_length=10, choices=TIPOS_USUARIO)
     telefone = models.CharField(max_length=15, blank=True)
+
+    def is_doador(self):
+        return self.tipo_usuario == 'doador'
+
+    def is_adotante(self):
+        return self.tipo_usuario == 'adotante'
 
     def __str__(self):
         return f"{self.username} ({self.get_tipo_usuario_display()})"
@@ -42,8 +50,18 @@ class Animal(models.Model):
     tipo = models.ForeignKey(TipoAnimal, on_delete=models.CASCADE, related_name="animais")
     descricao = models.TextField(blank=True)
     local = models.ForeignKey(Local, on_delete=models.CASCADE, related_name="animais")
-    doador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="animais_doadores")
     adotado = models.BooleanField(default=False)
+    adotante = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+          null=True, blank=True,
+            on_delete=models.SET_NULL, related_name='animais_adotados')#Novo campo p/ o adotante
+    doador = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='animais_doados'
+    )
 
     def __str__(self):
         return self.nome
