@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+#EDIT TESTE
 # Application definition
 
 AUTH_USER_MODEL = 'adote.Usuario'
