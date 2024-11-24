@@ -6,9 +6,11 @@ from django.conf import settings
 class Usuario(AbstractUser):
     DOADOR = 'doador'
     ADOTANTE = 'adotante'
+    ADMIN = 'admin' #MODERADOR
     TIPOS_USUARIO = [
         (DOADOR, 'Doador'),
         (ADOTANTE, 'Adotante'),
+        (ADMIN, 'Administrador'), #MODERADOR
     ]
 
     tipo_usuario = models.CharField(max_length=10, choices=TIPOS_USUARIO)
@@ -19,6 +21,9 @@ class Usuario(AbstractUser):
 
     def is_adotante(self):
         return self.tipo_usuario == 'adotante'
+    
+    def is_admin(self): #MODERADOR
+        return self.tipo_usuario == 'admin'
 
     def __str__(self):
         return f"{self.username} ({self.get_tipo_usuario_display()})"

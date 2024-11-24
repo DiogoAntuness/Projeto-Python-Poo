@@ -2,10 +2,12 @@ from django.contrib import admin
 from .models import Usuario, TipoAnimal, Local, Animal, Adocao, HistoriaAnimal
 
 @admin.register(Usuario)
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('username', 'tipo_usuario', 'email')
-    search_fields = ('username', 'email')
-    list_filter = ('tipo_usuario',)
+class UsuarioAdmin(admin.ModelAdmin): #MODERADOR
+   list_display = ('username', 'tipo_usuario', 'email', 'is_active')
+   search_fields = ('username', 'email') 
+   list_filter = ('tipo_usuario', 'is_active') 
+   fields = ('username', 'email', 'tipo_usuario', 'telefone', 'is_active', 'is_staff', 'is_superuser') 
+   readonly_fields = ('is_staff', 'is_superuser')
 
 @admin.register(TipoAnimal)
 class TipoAnimalAdmin(admin.ModelAdmin):

@@ -9,6 +9,7 @@ from django.http import HttpResponseForbidden
 from .forms import UsuarioForm
 from .forms import RegistroForm
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 def pagina_inicial(request):
     return render(request, 'pagina_inicial.html')
@@ -68,4 +69,23 @@ def doar_animal(request):
             return redirect('lista_animais')
     else:
         form = AnimalForm()
-    return render(request, 'doar_animal.html', {'form': form})
+    return render(request, 'doar_animal.html', {'form': form})  
+
+def is_admin(user): 
+    return user.is_authenticated and user.is_admin()
+@login_required 
+@user_passes_test(is_admin) 
+def aprovar_adocao(request, adocao_id): 
+# Lógica para aprovar adoção
+
+    pass 
+@login_required 
+@user_passes_test(is_admin) 
+def banir_usuario(request, usuario_id):
+ # Lógica para banir usuário 
+    pass 
+@login_required 
+@user_passes_test(is_admin) 
+def marcar_adotado(request, animal_id): 
+    # Lógica para marcar animal como adotado 
+    pass
