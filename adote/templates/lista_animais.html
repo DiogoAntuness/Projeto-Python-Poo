@@ -27,7 +27,12 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">{{ animal.nome }}</h5>
+                            <h5 class="card-title">
+                                {{ animal.nome }}
+                                {% if animal.adotado %}
+                                    <span class="badge bg-success">Adotado</span>
+                                {% endif %}
+                            </h5>
                         </div>
                         <div class="card-body">
                             <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
