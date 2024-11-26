@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Marcar Pets como Adotados{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <!-- Título da página -->
+        <h1 class="text-center mb-5">Marcar Pets como Adotados</h1>
+
+        <!-- Formulário para marcar o animal como adotado -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group mb-4">
+                        <label for="animal_id" class="form-label">Selecione um Animal</label>
+                        <select name="animal_id" id="animal_id" class="form-select">
+                            {% for animal in animais %}
+                                <option value="{{ animal.id }}">{{ animal.nome }} - {{ animal.tipo.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Botão para marcar o animal como adotado -->
+                    <button type="submit" class="btn btn-lg btn-success w-100">Marcar como Adotado</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Informações adicionais -->
+        <div class="mt-5 text-center">
+            <p>Selecione o animal que foi adotado e clique no botão para marcar como adotado. Isso atualizará o status do animal.</p>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'area_admin' %}" class="btn btn-secondary">Voltar para a Área Administrativa</a>
+    </div>
+    
+{% endblock %}

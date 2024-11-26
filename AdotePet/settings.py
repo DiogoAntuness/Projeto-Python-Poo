@@ -35,7 +35,7 @@ AUTH_USER_MODEL = 'adote.Usuario'
 # Opa
 LOGIN_URL = '/login/'  # Página de login
 LOGIN_REDIRECT_URL = '/'  # Página padrão após login
-LOGOUT_REDIRECT_URL = '/'  # Página após logout
+LOGOUT_REDIRECT_URL = '/deslogado/' # Página após logout
 
 
 
