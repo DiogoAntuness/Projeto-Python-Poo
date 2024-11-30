@@ -11,7 +11,8 @@
             <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
             <p><strong>Sexo:</strong> {{ animal.sexo }}</p>
             <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
-            <p><strong>Local:</strong> {{ animal.local.cidade }} - {{ animal.local.estado }}</p>
+            <p><strong>Local:</strong> {{ animal.local.cidade }} - {{ animal.local.estado }}</p>       
+            <p><strong>Nome do Doador:</strong> {{ animal.doador.username }}</p> <p><strong>Número para Contato:</strong> {{ animal.doador.telefone }}</p> <p><strong>Status de Adoção:</strong> {{ animal.adotado|yesno:"Adotado,Ainda não adotado" }}</p>
             <p><strong>Descrição:</strong> {{ animal.descricao }}</p>
         </div>
     </div>
