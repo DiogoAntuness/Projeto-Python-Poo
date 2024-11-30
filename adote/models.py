@@ -93,3 +93,4 @@ class HistoriaAnimal(models.Model):
 
     def __str__(self):
         return f"História de {self.animal.nome}"
+#Edit
