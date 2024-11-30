@@ -6,7 +6,7 @@
     <div class="container mt-5">
         <!-- Filtros -->
         <form method="get" action="" class="filter-form mb-5">
-            <div class="form-row">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label for="cidade" class="form-label">Cidade:</label>
                     <select name="cidade" id="cidade" class="form-select">
@@ -34,7 +34,12 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-custom mt-3">Aplicar Filtros</button>
+            <div class="d-flex justify-content-end align-items-center mt-3">
+                {% if user.is_authenticated and user.is_doador %}
+                    <a href="{% url 'doar_animal' %}" class="btn btn-primary mr-3">Doar Animal</a>
+                {% endif %}
+                <button type="submit" class="btn btn-custom">Aplicar Filtros</button>
+            </div>
         </form>
 
         <!-- Título da página -->

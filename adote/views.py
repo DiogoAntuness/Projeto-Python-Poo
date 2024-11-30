@@ -22,7 +22,7 @@ def lista_animais(request):
     cidade = request.GET.get('cidade')
     if cidade:
         animais = animais.filter(local__cidade=cidade)
-        
+
 # Filtrando por status de adoção 
     adotado = request.GET.get('adotado')
     if adotado == 'adotados': 
@@ -72,7 +72,7 @@ def doar_animal(request):
     if not request.user.is_doador():
         return HttpResponseForbidden("Apenas doadores podem acessar esta página.")
     if request.method == 'POST':
-        form = AnimalForm(request.POST)
+        form = AnimalForm(request.POST, request.FILES)
         if form.is_valid():
             animal = form.save(commit=False)
             animal.doador = request.user  # Associa o doador como o usuário logado
