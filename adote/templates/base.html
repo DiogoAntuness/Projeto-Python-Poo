@@ -55,14 +55,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
+                    <!-- Outros links ou elementos à esquerda -->
+                </ul>
+                <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <form action="{% url 'logout' %}" method="POST">
+                            <form action="{% url 'logout' %}" method="POST" class="d-inline">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Sair</button>
                             </form>
-                            
                         </li>
                     {% else %}
                         <li class="nav-item">
