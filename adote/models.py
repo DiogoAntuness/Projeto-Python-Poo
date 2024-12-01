@@ -67,6 +67,7 @@ class Animal(models.Model):
         on_delete=models.SET_NULL,
         related_name='animais_doados'
     )
+    foto = models.ImageField(upload_to='fotos_animais/', blank=True, null=True) # Novo campo para a foto
 
     def __str__(self):
         return self.nome

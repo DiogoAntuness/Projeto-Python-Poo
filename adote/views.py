@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from adote.models import Usuario 
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Animal, Local
+from .models import Animal, Local, TipoAnimal
 from .forms import AnimalForm, UsuarioForm, RegistroForm
 from django.http import HttpResponseForbidden
 
@@ -16,13 +16,31 @@ def pagina_inicial(request):
 def lista_animais(request):
     animais = Animal.objects.all()
     locais = Local.objects.all()
+    tipos = TipoAnimal.objects.all()
 
 # Filtrando por cidade, se especificado na query
     cidade = request.GET.get('cidade')
     if cidade:
         animais = animais.filter(local__cidade=cidade)
-    
-    return render(request, 'lista_animais.html', {'animais': animais, 'locais': locais})
+
+# Filtrando por status de adoção 
+    adotado = request.GET.get('adotado')
+    if adotado == 'adotados': 
+        animais = animais.filter(adotado=True) 
+    elif adotado == 'nao_adotados': 
+        animais = animais.filter(adotado=False)
+
+# Filtrando por tipo de animal 
+    tipo_animal = request.GET.get('tipo')
+    if tipo_animal:
+        animais = animais.filter(tipo__nome=tipo_animal)
+
+    context = { 
+        'animais': animais,
+          'locais': locais,
+            'tipos': tipos 
+    }
+    return render(request, 'lista_animais.html', context)
 
 # Página de detalhes de um animal
 def detalhes_animal(request, animal_id):
@@ -54,7 +72,7 @@ def doar_animal(request):
     if not request.user.is_doador():
         return HttpResponseForbidden("Apenas doadores podem acessar esta página.")
     if request.method == 'POST':
-        form = AnimalForm(request.POST)
+        form = AnimalForm(request.POST, request.FILES)
         if form.is_valid():
             animal = form.save(commit=False)
             animal.doador = request.user  # Associa o doador como o usuário logado

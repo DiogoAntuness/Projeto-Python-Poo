@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 class AnimalForm(forms.ModelForm):
     class Meta:
         model = Animal
-        fields = ['nome', 'idade_meses', 'idade_anos', 'sexo', 'tipo', 'local', 'descricao']
+        fields = ['nome', 'idade_meses', 'idade_anos', 'sexo', 'tipo', 'local', 'descricao', 'foto']
 
 class UsuarioForm(UserCreationForm):
     class Meta:
