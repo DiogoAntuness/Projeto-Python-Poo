@@ -42,38 +42,67 @@
             </div>
         </form>
 
-        <!-- Título da página -->
-        <h1 class="text-center mb-5">Animais para Adoção</h1>
+        <!-- Seção Animais para Adoção -->
+        {% if request.GET.adotado != 'adotados' %}
+            <h2 class="text-center mb-5">Animais para Adoção</h2>
 
-        <!-- Lista de animais -->
-        <div class="row">
-            {% for animal in animais %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                {{ animal.nome }}
-                                {% if animal.adotado %}
-                                    <span class="badge bg-success">Adotado</span>
-                                {% endif %}
-                            </h5>
+            <div class="row">
+                {% for animal in animais %}
+                    {% if not animal.adotado %}
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ animal.nome }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
+                                    <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
+                                    <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
+                                    <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
+                                    <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
-                            <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
-                            <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
-                            <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
-                            <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
+                    {% endif %}
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-warning" role="alert">
+                            Nenhum animal disponível para adoção.
                         </div>
                     </div>
-                </div>
-            {% empty %}
-                <div class="col-12">
-                    <div class="alert alert-warning" role="alert">
-                        Nenhum animal encontrado.
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Seção Animais Adotados -->
+        {% if request.GET.adotado != 'nao_adotados' %}
+            <div class="row mt-5">
+                <h2 class="text-center mb-4">Animais Adotados</h2>
+                {% for animal in animais %}
+                    {% if animal.adotado %}
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ animal.nome }} <span class="badge bg-success">Adotado</span></h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
+                                    <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
+                                    <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
+                                    <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
+                                    <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-warning" role="alert">
+                            Nenhum animal adotado encontrado.
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
