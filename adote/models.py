@@ -4,9 +4,6 @@ from django.conf import settings
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 
-<<<<<<< HEAD
-#TESTE // DIOGO :D
-=======
 # Constantes Globais
 TIPOS_USUARIO = [
     ('doador', 'Doador'),
@@ -20,7 +17,6 @@ SEXO_CHOICES = [
 ]
 
 # Usuários
->>>>>>> 20904f88a6f224d86e151c3d15f1f52bab0dc38d
 class Usuario(AbstractUser):
     """
     Modelo personalizado para representar usuários com diferentes papéis.
