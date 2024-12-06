@@ -1,4 +1,3 @@
-# adote/urls.py
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
@@ -12,6 +11,7 @@ auth_patterns = [
     path('registro/', views.registro, name='registro'),
     path('deslogado/', views.deslogado, name='deslogado'),  # Página após logout
 ]
+
 # URLs para Animais
 animal_patterns = [
     path('', views.pagina_inicial, name='pagina_inicial'),  # Página inicial
@@ -20,12 +20,17 @@ animal_patterns = [
     path('adotar/<int:animal_id>/', views.adotar_animal, name='adotar_animal'),  # Adoção
     path('doar/', views.doar_animal, name='doar_animal'),  # Doação
     path('marcar-adotado/', views.marcar_adotado, name='marcar_adotado'),  # Marcar como adotado
+    path('quero_adotar/<int:animal_id>/', views.quero_adotar, name='quero_adotar'),  # Interessados
+    path('gerenciar_adocao/<int:animal_id>/', views.gerenciar_adocao, name='gerenciar_adocao'),  # Gerenciamento de adoção
 ]
+
 # URLs para Administração
 admin_patterns = [
     path('admin-area/', views.area_admin, name='area_admin'),  # Área administrativa
     path('adicionar-pet/', views.adicionar_pet, name='adicionar_pet'),  # Adicionar novo pet
+    path('remover_pet/<int:animal_id>/', views.remover_pet, name='remover_pet'), #ATZ 1.1 NOVO
 ]
+
 # Combinação dos padrões de rota
 urlpatterns = auth_patterns + animal_patterns + admin_patterns
 

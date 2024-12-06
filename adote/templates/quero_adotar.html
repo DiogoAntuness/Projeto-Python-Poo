@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Interessados em {{ animal.nome }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title">{{ animal.nome }}</h2>
+                    <p class="card-text"><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
+                    <p class="card-text"><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
+                    <p class="card-text"><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
+                    <p class="card-text"><strong>Local:</strong> {{ animal.local.cidade }} - {{ animal.local.estado }}</p>
+                    <p class="card-text"><strong>Status de Adoção:</strong> {{ animal.adotado|yesno:"Adotado,Ainda não adotado" }}</p>
+                    <p class="card-text"><strong>Descrição:</strong> {{ animal.descricao }}</p>
+                    <hr class="my-4">
+                    <h5 class="card-text text-center"><strong>Nome do Doador:</strong> <span class="text-primary">{{ animal.doador.username }}</span></h5>
+                    <h5 class="card-text text-center"><strong>Número para Contato (WhatsApp):</strong> <span class="text-success">{{ animal.doador.telefone }}</span></h5>
+                    <p class="text-center mt-2"><em>Para adotar este animal, entre em contato com o doador.</em></p>
+                    <hr class="my-4">
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                {% if animal.foto %}
+                    <img src="{{ animal.foto.url }}" alt="Foto de {{ animal.nome }}" class="img-fluid img-thumbnail my-3" style="max-width: 100%; height: auto;">
+                {% else %}
+                    <p>Sem foto disponível.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <h3 class="mt-5">Interessados em Adotar</h3>
+    <ul class="list-group">
+        {% for interessado in interessados %}
+            <li class="list-group-item">{{ interessado.adotante.username }}</li>
+        {% empty %}
+            <li class="list-group-item">Nenhum interessado até o momento.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'lista_animais' %}" class="btn btn-custom back-link mt-3">Voltar para a lista</a>
+</div>
+{% endblock %}

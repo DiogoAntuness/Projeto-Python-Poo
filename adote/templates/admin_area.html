@@ -3,36 +3,52 @@
 {% block title %}Área Administrativa{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <!-- Título da página -->
-        <h1 class="text-center mb-5">Área Administrativa</h1>
+<div class="container mt-5">
+    <!-- Título da página -->
+    <h1 class="text-center mb-5">Área Administrativa</h1>
 
-        <!-- Opções para o administrador -->
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <a href="{% url 'marcar_adotado' %}" class="btn btn-lg btn-primary w-100">Marcar Pets como Adotados</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <a href="{% url 'adicionar_pet' %}" class="btn btn-lg btn-success w-100">Adicionar Novo Pet</a>
-                    </div>
+    <!-- Opções para o administrador -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a href="{% url 'marcar_adotado' %}" class="btn btn-lg btn-primary w-100">Marcar Pets como Adotados</a>
                 </div>
             </div>
         </div>
-
-        <!-- Informação sobre a administração -->
-        <div class="mt-5">
-            <h3>Informações Administrativas</h3>
-            <ul class="list-group">
-                <li class="list-group-item">Gerencie os pets disponíveis para adoção</li>
-                <li class="list-group-item">Marque pets como adotados ou disponíveis</li>
-                <li class="list-group-item">Adicione novos pets para adoção</li>
-            </ul>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a href="{% url 'adicionar_pet' %}" class="btn btn-lg btn-success w-100">Adicionar Novo Pet</a>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Lista de Animais para Remoção -->
+    <div class="mt-5">
+        <h3 class="text-center mb-4">Remover Animais</h3>
+        <ul class="list-group">
+            {% for animal in animais %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ animal.nome }}
+                    <a href="{% url 'remover_pet' animal.id %}" class="btn btn-danger">Remover</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Nenhum animal encontrado.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Informação sobre a administração -->
+    <div class="mt-5">
+        <h3>Informações Administrativas</h3>
+        <ul class="list-group">
+            <li class="list-group-item">Gerencie os pets disponíveis para adoção</li>
+            <li class="list-group-item">Marque pets como adotados ou disponíveis</li>
+            <li class="list-group-item">Adicione novos pets para adoção</li>
+            <li class="list-group-item">Remova pets da lista de adoção ou da lista de adotados</li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

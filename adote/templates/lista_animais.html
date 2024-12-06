@@ -64,12 +64,6 @@
                             </div>
                         </div>
                     {% endif %}
-                {% empty %}
-                    <div class="col-12">
-                        <div class="alert alert-warning" role="alert">
-                            Nenhum animal disponível para adoção.
-                        </div>
-                    </div>
                 {% endfor %}
             </div>
         {% endif %}
@@ -83,7 +77,10 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">{{ animal.nome }} <span class="badge bg-success">Adotado</span></h5>
+                                    <h5 class="card-title">
+                                        {{ animal.nome }} 
+                                        <span class="badge bg-success">Adotado por: {{ animal.adotante.username }}</span>
+                                    </h5>
                                 </div>
                                 <div class="card-body">
                                     <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
@@ -95,12 +92,6 @@
                             </div>
                         </div>
                     {% endif %}
-                {% empty %}
-                    <div class="col-12">
-                        <div class="alert alert-warning" role="alert">
-                            Nenhum animal adotado encontrado.
-                        </div>
-                    </div>
                 {% endfor %}
             </div>
         {% endif %}

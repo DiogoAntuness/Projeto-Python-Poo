@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Usuario, TipoAnimal, Local, Animal, Adocao, HistoriaAnimal
+from .models import Usuario, TipoAnimal, Local, Animal, Adocao, HistoriaAnimal, InteresseAdocao
+
+admin.site.register(InteresseAdocao)#ATZ 1.1
+
 # ------------------------------
 # Configurações do Admin para o Modelo Usuario
 # ------------------------------
