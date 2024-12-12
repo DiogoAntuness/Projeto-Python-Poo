@@ -33,57 +33,59 @@ def registro(request):
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
 
-def detalhes_animal(request, animal_id): #ATZ 1.2
+def detalhes_animal(request, animal_id): #ATZ 1.3
     """
     Página de detalhes de um animal específico.
     """
     animal = get_object_or_404(Animal, id=animal_id)
     # Verificar se o usuário é o doador do animal ou um administrador
-    if request.user.is_authenticated and (request.user == animal.doador or request.user.is_admin):
+    if request.user.is_authenticated and (request.user == animal.doador or request.user.tipo_usuario == 'admin'):
         return redirect('gerenciar_adocao', animal_id=animal_id)
     
     return render(request, 'detalhes_animal.html', {'animal': animal})
 
+
 # Áreas protegidas
 @login_required
 @user_passes_test(is_admin)
-def lista_adocoes(request): #ATZ 1.2
+def lista_adocoes(request):
     """
     Lista todas as adoções realizadas.
     """
-    adocoes = Adocao.objects.all()
+    adocoes = Animal.objects.filter(adotado=True)
     return render(request, 'lista_adocoes.html', {'adocoes': adocoes})
 
+
 @login_required #ATZ 1.1 & 1.2
+@login_required
+@login_required
 def gerenciar_adocao(request, animal_id):
     animal = get_object_or_404(Animal, id=animal_id)
-
-    # Verificar se o usuário é o doador do animal ou um administrador
-    if request.user != animal.doador and not request.user.is_admin:
-        return HttpResponseForbidden("Você não tem permissão para gerenciar esta adoção.")
-
-    # Listar interessados
     interessados = InteresseAdocao.objects.filter(animal=animal)
+    permissao = request.user == animal.doador or request.user.tipo_usuario == 'admin'
+    mensagem = None
 
-    if request.method == 'POST':
+    if request.method == 'POST' and permissao:
         if 'adotante_id' in request.POST:
             adotante_id = request.POST.get('adotante_id')
             adotante = get_object_or_404(Usuario, id=adotante_id)
-            
-            # Marcar o animal como adotado e associar ao adotante
             animal.adotado = True
             animal.adotante = adotante
             animal.save()
-        
         elif 'remover_adocao' in request.POST:
-            # Remover a adoção e voltar para disponível
             animal.adotado = False
             animal.adotante = None
             animal.save()
-
         return redirect('detalhes_animal', animal_id=animal_id)
+    elif not permissao:
+        mensagem = "Você não tem permissão para gerenciar esta adoção."
 
-    return render(request, 'gerenciar_adocao.html', {'animal': animal, 'interessados': interessados})
+    return render(request, 'gerenciar_adocao.html', {
+        'animal': animal,
+        'interessados': interessados,
+        'mensagem': mensagem
+    })
+
 
 @login_required #ATK 1.1
 def lista_animais(request):

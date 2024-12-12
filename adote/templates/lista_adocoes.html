@@ -1,19 +1,40 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de Adoções{% endblock %}
+{% block title %}Adoções Realizadas{% endblock %}
 
 {% block content %}
+<style>
+    .text-primary {
+        color: #007bff;
+    }
+    .text-success {
+        color: #28a745;
+    }
+    .text-muted {
+        color: #6c757d;
+    }
+    .text-warning {
+        color: #ffc107;
+    }
+    .list-group-item-action {
+        transition: background-color 0.3s ease;
+    }
+    .list-group-item-action:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+
 <div class="container mt-5">
     <h1 class="text-center mb-5">Adoções Realizadas</h1>
     <ul class="list-group">
         {% for adocao in adocoes %}
-            <li class="list-group-item">
-                <strong>Animal:</strong> {{ adocao.animal.nome }}<br>
-                <strong>Adotante:</strong> {{ adocao.adotante.username }}<br>
-                <strong>Data da Adoção:</strong> {{ adocao.data_adocao|date:"d/m/Y" }}
+            <li class="list-group-item list-group-item-action">
+                <h5 class="mb-2"><strong>Animal:</strong> <span class="text-primary">{{ adocao.nome }}</span></h5>
+                <p><strong>Doador:</strong> <span class="text-success">{{ adocao.doador.username }}</span> - <span class="text-muted">{{ adocao.doador.telefone }}</span></p>
+                <p><strong>Adotante:</strong> <span class="text-success">{{ adocao.adotante.username }}</span> - <span class="text-muted">{{ adocao.adotante.telefone }}</span></p>
             </li>
         {% empty %}
-            <li class="list-group-item">Nenhuma adoção realizada até o momento.</li>
+            <li class="list-group-item text-center text-warning">Nenhuma adoção realizada até o momento.</li>
         {% endfor %}
     </ul>
 </div>

@@ -40,6 +40,9 @@
                             <button type="submit" class="btn btn-warning">Remover Adoção</button>
                         </form>
                     {% endif %}
+                    {% if mensagem %}
+                        <div class="alert alert-danger mt-3">{{ mensagem }}</div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-4 text-center">

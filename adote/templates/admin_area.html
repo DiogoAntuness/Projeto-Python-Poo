@@ -3,19 +3,28 @@
 {% block title %}Área Administrativa{% endblock %}
 
 {% block content %}
+<style>
+    .menu-title {
+        color: #FFC107; /* Cor amarela do logo */
+    }
+    .info-title {
+        color: #FFC107; /* Cor amarela do logo */
+    }
+</style>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-3">
             <!-- Menu Lateral -->
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Menu</h4>
+                    <h4 class="menu-title">Menu</h4>
                     <div class="list-group">
                         <a href="{% url 'marcar_adotado' %}" class="list-group-item list-group-item-action">Marcar Pets como Adotados</a>
                         <a href="{% url 'adicionar_pet' %}" class="list-group-item list-group-item-action">Adicionar Novo Pet</a>
                         <a href="{% url 'remover_pet_list' %}" class="list-group-item list-group-item-action">Remover Animais</a>
+                        <a href="{% url 'lista_adocoes' %}" class="list-group-item list-group-item-action">Adoções Realizadas</a>
                         <a href="{% url 'lista_animais' %}" class="list-group-item list-group-item-action">Voltar à Página de Adoção</a>
-                        <!-- Adicione outras opções conforme necessário -->
                     </div>
                 </div>
             </div>
@@ -24,9 +33,17 @@
             <!-- Título da página -->
             <h1 class="text-center mb-5">Área Administrativa</h1>
 
+            <!-- Informações do Administrador -->
+            <div class="mb-5">
+                <h4 class="info-title">Informações do Administrador</h4>
+                <p><strong>Nome:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Telefone:</strong> {{ user.telefone }}</p>
+            </div>
+
             <!-- Informação sobre a administração -->
             <div class="mt-5">
-                <h3>Informações Administrativas</h3>
+                <h3 class="info-title">Informações Administrativas</h3>
                 <ul class="list-group">
                     <li class="list-group-item">Gerencie os pets disponíveis para adoção</li>
                     <li class="list-group-item">Marque pets como adotados ou disponíveis</li>

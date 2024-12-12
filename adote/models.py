@@ -18,9 +18,6 @@ SEXO_CHOICES = [
 
 # Usuários
 class Usuario(AbstractUser):
-    """
-    Modelo personalizado para representar usuários com diferentes papéis.
-    """
     tipo_usuario = models.CharField(max_length=10, choices=TIPOS_USUARIO)
     telefone = models.CharField(
         max_length=15,
@@ -37,7 +34,7 @@ class Usuario(AbstractUser):
     def is_adotante(self):
         return self.tipo_usuario == 'adotante'
 
-    def is_admin(self):  # MODERADOR
+    def is_admin(self):
         return self.tipo_usuario == 'admin'
 
     def __str__(self):

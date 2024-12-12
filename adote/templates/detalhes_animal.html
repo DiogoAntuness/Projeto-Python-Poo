@@ -42,8 +42,8 @@
         </div>
     {% endif %}
 
-    <!-- Botão para gerenciar adoção para doadores e admins -->
-    {% if user.is_authenticated and (user == animal.doador or user.is_admin) %}
+    <!-- Botão para gerenciar adoção apenas para administradores e doador correto -->
+    {% if user.is_authenticated and user == animal.doador or user.tipo_usuario == 'admin' %}
         <div class="mt-3">
             <a href="{% url 'gerenciar_adocao' animal.id %}" class="btn btn-warning">Gerenciar Adoção</a>
         </div>

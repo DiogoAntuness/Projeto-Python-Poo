@@ -34,6 +34,8 @@ admin_patterns = [
     path('remover_pet_list/', views.remover_pet_list, name='remover_pet_list'),
     path('lista_animais/', views.lista_animais, name='lista_animais'),
 
+    path('lista_adocoes/', views.lista_adocoes, name='lista_adocoes'),
+
 
 ]
 
