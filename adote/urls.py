@@ -29,6 +29,12 @@ admin_patterns = [
     path('admin-area/', views.area_admin, name='area_admin'),  # Área administrativa
     path('adicionar-pet/', views.adicionar_pet, name='adicionar_pet'),  # Adicionar novo pet
     path('remover_pet/<int:animal_id>/', views.remover_pet, name='remover_pet'), #ATZ 1.1 NOVO
+
+    path('marcar_adotado/', views.marcar_adotado, name='marcar_adotado'),
+    path('remover_pet_list/', views.remover_pet_list, name='remover_pet_list'),
+    path('lista_animais/', views.lista_animais, name='lista_animais'),
+
+
 ]
 
 # Combinação dos padrões de rota

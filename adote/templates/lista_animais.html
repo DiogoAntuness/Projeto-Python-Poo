@@ -3,97 +3,100 @@
 {% block title %}Lista de Animais{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <!-- Filtros -->
-        <form method="get" action="" class="filter-form mb-5">
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="cidade" class="form-label">Cidade:</label>
-                    <select name="cidade" id="cidade" class="form-select">
-                        <option value="">Selecione uma cidade</option>
-                        {% for local in locais %}
-                            <option value="{{ local.cidade }}" {% if request.GET.cidade == local.cidade %}selected{% endif %}>{{ local.cidade }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="adotado" class="form-label">Status de Adoção:</label>
-                    <select name="adotado" id="adotado" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="adotados" {% if request.GET.adotado == 'adotados' %}selected{% endif %}>Adotados</option>
-                        <option value="nao_adotados" {% if request.GET.adotado == 'nao_adotados' %}selected{% endif %}>Ainda não adotados</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="tipo" class="form-label">Tipo de Animal:</label>
-                    <select name="tipo" id="tipo" class="form-select">
-                        <option value="">Todos os Tipos</option>
-                        {% for tipo in tipos %}
-                            <option value="{{ tipo.nome }}" {% if request.GET.tipo == tipo.nome %}selected{% endif %}>{{ tipo.nome }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+<div class="container mt-5">
+    <!-- Filtros -->
+    <form method="get" action="" class="filter-form mb-5">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="cidade" class="form-label">Cidade:</label>
+                <select name="cidade" id="cidade" class="form-select">
+                    <option value="">Selecione uma cidade</option>
+                    {% for local in locais %}
+                        <option value="{{ local.cidade }}" {% if request.GET.cidade == local.cidade %}selected{% endif %}>{{ local.cidade }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="d-flex justify-content-end align-items-center mt-3">
-                {% if user.is_authenticated and user.is_doador %}
-                    <a href="{% url 'doar_animal' %}" class="btn btn-primary mr-3">Doar Animal</a>
+            <div class="form-group col-md-4">
+                <label for="adotado" class="form-label">Status de Adoção:</label>
+                <select name="adotado" id="adotado" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="adotados" {% if request.GET.adotado == 'adotados' %}selected{% endif %}>Adotados</option>
+                    <option value="nao_adotados" {% if request.GET.adotado == 'nao_adotados' %}selected{% endif %}>Ainda não adotados</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="tipo" class="form-label">Tipo de Animal:</label>
+                <select name="tipo" id="tipo" class="form-select">
+                    <option value="">Todos os Tipos</option>
+                    {% for tipo in tipos %}
+                        <option value="{{ tipo.nome }}" {% if request.GET.tipo == tipo.nome %}selected{% endif %}>{{ tipo.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end align-items-center mt-3">
+            {% if user.is_authenticated and user.is_doador %}
+                <a href="{% url 'doar_animal' %}" class="btn btn-primary mr-3">Doar Animal</a>
+            {% endif %}
+            {% if user.is_authenticated and user.is_admin %}
+                <a href="{% url 'area_admin' %}" class="btn btn-warning mr-3">Entrar na Área Administrativa</a>
+            {% endif %}
+            <button type="submit" class="btn btn-custom">Aplicar Filtros</button>
+        </div>
+    </form>
+
+    <!-- Seção Animais para Adoção -->
+    {% if request.GET.adotado != 'adotados' %}
+        <h2 class="text-center mb-5">Animais para Adoção</h2>
+
+        <div class="row">
+            {% for animal in animais %}
+                {% if not animal.adotado %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ animal.nome }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
+                                <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
+                                <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
+                                <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
+                                <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
-                <button type="submit" class="btn btn-custom">Aplicar Filtros</button>
-            </div>
-        </form>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        <!-- Seção Animais para Adoção -->
-        {% if request.GET.adotado != 'adotados' %}
-            <h2 class="text-center mb-5">Animais para Adoção</h2>
-
-            <div class="row">
-                {% for animal in animais %}
-                    {% if not animal.adotado %}
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title">{{ animal.nome }}</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
-                                    <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
-                                    <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
-                                    <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
-                                    <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
-                                </div>
+    <!-- Seção Animais Adotados -->
+    {% if request.GET.adotado != 'nao_adotados' %}
+        <div class="row mt-5">
+            <h2 class="text-center mb-4">Animais Adotados</h2>
+            {% for animal in animais %}
+                {% if animal.adotado %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    {{ animal.nome }} 
+                                    <span class="badge bg-success">Adotado por: {{ animal.adotante.username }}</span>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
+                                <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
+                                <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
+                                <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
+                                <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
                             </div>
                         </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <!-- Seção Animais Adotados -->
-        {% if request.GET.adotado != 'nao_adotados' %}
-            <div class="row mt-5">
-                <h2 class="text-center mb-4">Animais Adotados</h2>
-                {% for animal in animais %}
-                    {% if animal.adotado %}
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title">
-                                        {{ animal.nome }} 
-                                        <span class="badge bg-success">Adotado por: {{ animal.adotante.username }}</span>
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <p><strong>Idade:</strong> {{ animal.idade_formatada }}</p>
-                                    <p><strong>Sexo:</strong> {{ animal.get_sexo_display }}</p>
-                                    <p><strong>Tipo:</strong> {{ animal.tipo.nome }}</p>
-                                    <p><strong>Cidade:</strong> {{ animal.local.cidade }}</p>
-                                    <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-info">Ver Detalhes</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

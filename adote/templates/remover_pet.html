@@ -1,3 +1,4 @@
+{% endblock %}
 {% extends 'base.html' %}
 
 {% block title %}Remover {{ animal.nome }}{% endblock %}
@@ -11,7 +12,7 @@
             <form method="post" action="{% url 'remover_pet' animal.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Remover</button>
-                <a href="{% url 'area_admin' %}" class="btn btn-secondary">Cancelar</a>
+                <a href="{% url 'remover_pet_list' %}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>

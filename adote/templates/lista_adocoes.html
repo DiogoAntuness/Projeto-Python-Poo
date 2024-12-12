@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Adoções{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Adoções Realizadas</h1>
+    <ul class="list-group">
+        {% for adocao in adocoes %}
+            <li class="list-group-item">
+                <strong>Animal:</strong> {{ adocao.animal.nome }}<br>
+                <strong>Adotante:</strong> {{ adocao.adotante.username }}<br>
+                <strong>Data da Adoção:</strong> {{ adocao.data_adocao|date:"d/m/Y" }}
+            </li>
+        {% empty %}
+            <li class="list-group-item">Nenhuma adoção realizada até o momento.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

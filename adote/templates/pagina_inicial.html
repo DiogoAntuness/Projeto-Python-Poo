@@ -3,10 +3,24 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <h1>Bem-vindo ao AdotePet!</h1>
-        <p>Aqui você pode encontrar animais para adoção e também doar.</p>
-        <a href="{% url 'lista_animais' %}" class="btn btn-primary">Ver Animais</a>
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Bem-vindo ao AdotePet</h1>
+    <p class="text-center">Encontre seu novo amigo de quatro patas ou ajude um animal a encontrar um lar!</p>
+    
+    <!-- Conteúdo principal da página inicial -->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <a href="{% url 'lista_animais' %}" class="btn btn-primary btn-lg">Ver Animais para Adoção</a>
+        </div>
     </div>
-{% endblock %}
 
+    <!-- Botão para moderadores/admins -->
+    {% if user.is_authenticated and user.is_admin %}
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <a href="{% url 'area_admin' %}" class="btn btn-warning btn-lg">Entrar na Área Administrativa</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

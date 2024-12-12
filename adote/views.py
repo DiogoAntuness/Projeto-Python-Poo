@@ -33,24 +33,33 @@ def registro(request):
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
 
-def detalhes_animal(request, animal_id):
+def detalhes_animal(request, animal_id): #ATZ 1.2
     """
     Página de detalhes de um animal específico.
     """
     animal = get_object_or_404(Animal, id=animal_id)
-    # Verificar se o usuário é o doador do animal ATZ 1.1
-    if request.user.is_authenticated and request.user == animal.doador: 
+    # Verificar se o usuário é o doador do animal ou um administrador
+    if request.user.is_authenticated and (request.user == animal.doador or request.user.is_admin):
         return redirect('gerenciar_adocao', animal_id=animal_id)
     
     return render(request, 'detalhes_animal.html', {'animal': animal})
 
 # Áreas protegidas
-@login_required #ATZ 1.1
+@login_required
+@user_passes_test(is_admin)
+def lista_adocoes(request): #ATZ 1.2
+    """
+    Lista todas as adoções realizadas.
+    """
+    adocoes = Adocao.objects.all()
+    return render(request, 'lista_adocoes.html', {'adocoes': adocoes})
+
+@login_required #ATZ 1.1 & 1.2
 def gerenciar_adocao(request, animal_id):
     animal = get_object_or_404(Animal, id=animal_id)
 
-    # Verificar se o usuário é o doador do animal
-    if request.user != animal.doador:
+    # Verificar se o usuário é o doador do animal ou um administrador
+    if request.user != animal.doador and not request.user.is_admin:
         return HttpResponseForbidden("Você não tem permissão para gerenciar esta adoção.")
 
     # Listar interessados
@@ -218,7 +227,14 @@ def remover_pet(request, animal_id):
     
     return render(request, 'remover_pet.html', {'animal': animal})
 
-
+@login_required
+@user_passes_test(is_admin) #ATZ 1.2
+def remover_pet_list(request):
+    """
+    Lista todos os animais para possível remoção.
+    """
+    animais = Animal.objects.all()
+    return render(request, 'remover_pet_list.html', {'animais': animais})
 
 # Páginas auxiliares
 def deslogado(request):
