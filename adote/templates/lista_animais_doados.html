@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Animais Doados{% endblock %}
+
+{% block content %}
+<style>
+    .text-primary {
+        color: #007bff;
+    }
+    .text-success {
+        color: #28a745;
+    }
+    .text-muted {
+        color: #6c757d;
+    }
+    .text-warning {
+        color: #ffc107;
+    }
+    .list-group-item-action {
+        transition: background-color 0.3s ease;
+    }
+    .list-group-item-action:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Animais Doados</h1>
+    <ul class="list-group">
+        {% for animal in animais_doados %}
+            <li class="list-group-item list-group-item-action">
+                <h5 class="mb-2"><strong>Animal:</strong> <span class="text-primary">{{ animal.nome }}</span></h5>
+                <p><strong>Adotado por:</strong> <span class="text-success">{{ animal.adotante.username }}</span> - <span class="text-muted">{{ animal.adotante.telefone }}</span></p>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-warning">Nenhum animal doado ainda.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'lista_animais' %}" class="btn btn-custom back-link mt-3">Voltar para a lista</a>
+</div>
+{% endblock %}

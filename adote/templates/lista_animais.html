@@ -37,9 +37,13 @@
         <div class="d-flex justify-content-end align-items-center mt-3">
             {% if user.is_authenticated and user.is_doador %}
                 <a href="{% url 'doar_animal' %}" class="btn btn-primary mr-3">Doar Animal</a>
+                <a href="{% url 'lista_animais_doados' %}" class="btn btn-info mr-3">Animais que Doei</a>
+            {% endif %}
+            {% if user.is_authenticated and user.is_adotante %}
+                <a href="{% url 'lista_animais_adotados' %}" class="btn btn-info mr-3">Animais que Adotei</a>
             {% endif %}
             {% if user.is_authenticated and user.is_admin %}
-                <a href="{% url 'area_admin' %}" class="btn btn-warning mr-3">Entrar na Área Administrativa</a>
+                <a href="{% url 'area_admin' %}" class="btn btn-warning mr-3">Área-Admin</a>
             {% endif %}
             <button type="submit" class="btn btn-custom">Aplicar Filtros</button>
         </div>

@@ -157,17 +157,3 @@ class InteresseAdocao(models.Model):
 
     def __str__(self):
         return f"{self.adotante.username} está interessado em {self.animal.nome}"
-
-class HistoriaAnimal(models.Model):
-    """
-    Modelo que armazena as histórias de vida dos animais.
-    """
-    animal = models.OneToOneField(Animal, on_delete=models.CASCADE, related_name="historia")
-    historia = models.TextField()
-
-    def __str__(self):
-        return f"História de {self.animal.nome}"
-
-    class Meta:
-        verbose_name = "História do Animal"
-        verbose_name_plural = "Histórias dos Animais"

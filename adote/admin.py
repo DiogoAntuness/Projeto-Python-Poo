@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario, TipoAnimal, Local, Animal, Adocao, HistoriaAnimal, InteresseAdocao
+from .models import Usuario, TipoAnimal, Local, Animal, Adocao, InteresseAdocao
 
 admin.site.register(InteresseAdocao)#ATZ 1.1
 
@@ -63,13 +63,4 @@ class AdocaoAdmin(admin.ModelAdmin):
     list_display = ('animal', 'adotante', 'data_adocao')
     search_fields = ('animal__nome', 'adotante__username')
     list_filter = ('data_adocao',)
-# ------------------------------
-# Configurações do Admin para o Modelo HistoriaAnimal
-# ------------------------------
-@admin.register(HistoriaAnimal)
-class HistoriaAnimalAdmin(admin.ModelAdmin):
-    """
-    Configurações do painel de administração para o modelo HistoriaAnimal.
-    """
-    list_display = ('animal',)
-    search_fields = ('animal__nome',)
+

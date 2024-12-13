@@ -244,3 +244,19 @@ def deslogado(request):
     Página exibida após o logout.
     """
     return render(request, 'logged_out.html')
+
+@login_required
+def lista_animais_doados(request):
+    """
+    Lista os animais doados pelo usuário atual.
+    """
+    animais_doados = Animal.objects.filter(doador=request.user)
+    return render(request, 'lista_animais_doados.html', {'animais_doados': animais_doados})
+
+@login_required
+def lista_animais_adotados(request):
+    """
+    Lista os animais adotados pelo usuário atual.
+    """
+    animais_adotados = Animal.objects.filter(adotante=request.user)
+    return render(request, 'lista_animais_adotados.html', {'animais_adotados': animais_adotados})
