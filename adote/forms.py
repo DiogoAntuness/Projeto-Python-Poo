@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Animal, Usuario
-# ------------------------------
-# Formulários Relacionados a Animais
-# ------------------------------
+
 class AnimalForm(forms.ModelForm):
     """
     Formulário para adicionar ou editar um animal.
@@ -37,9 +35,7 @@ class AnimalForm(forms.ModelForm):
             raise forms.ValidationError("Informe a idade do animal, seja em anos ou meses.")
         
         return cleaned_data
-# ------------------------------
-# Formulários Relacionados a Usuários
-# ------------------------------
+
 class UsuarioForm(UserCreationForm):
     """
     Formulário para criação ou edição de usuários, incluindo campos adicionais.

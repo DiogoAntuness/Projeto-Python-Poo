@@ -2,10 +2,6 @@ from django.contrib import admin
 from .models import Usuario, TipoAnimal, Local, Animal, Adocao, InteresseAdocao
 
 admin.site.register(InteresseAdocao)#ATZ 1.1
-
-# ------------------------------
-# Configurações do Admin para o Modelo Usuario
-# ------------------------------
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
     """
@@ -16,9 +12,7 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_filter = ('tipo_usuario', 'is_active')
     fields = ('username', 'email', 'tipo_usuario', 'telefone', 'is_active', 'is_staff', 'is_superuser')
     readonly_fields = ('is_staff', 'is_superuser')
-# ------------------------------
-# Configurações do Admin para o Modelo TipoAnimal
-# ------------------------------
+
 @admin.register(TipoAnimal)
 class TipoAnimalAdmin(admin.ModelAdmin):
     """
@@ -26,9 +20,7 @@ class TipoAnimalAdmin(admin.ModelAdmin):
     """
     list_display = ('nome',)
     search_fields = ('nome',)
-# ------------------------------
-# Configurações do Admin para o Modelo Local
-# ------------------------------
+
 @admin.register(Local)
 class LocalAdmin(admin.ModelAdmin):
     """
@@ -36,9 +28,7 @@ class LocalAdmin(admin.ModelAdmin):
     """
     list_display = ('cidade', 'estado')
     search_fields = ('cidade', 'estado')
-# ------------------------------
-# Configurações do Admin para o Modelo Animal
-# ------------------------------
+
 @admin.register(Animal)
 class AnimalAdmin(admin.ModelAdmin):
     """
@@ -52,9 +42,7 @@ class AnimalAdmin(admin.ModelAdmin):
         'local', 'descricao', 'foto', 'doador', 'adotante', 'adotado'
     )
     readonly_fields = ('adotante',)  # Impede edição direta do campo adotante no admin
-# ------------------------------
-# Configurações do Admin para o Modelo Adocao
-# ------------------------------
+
 @admin.register(Adocao)
 class AdocaoAdmin(admin.ModelAdmin):
     """
